@@ -2,21 +2,40 @@
 let humanScore = 0;
 let computerScore = 0;
 
-// prints out human's choice in the console
-let humanChoice = getHumanChoice();
-console.log("Human's choice: " + humanChoice);
+let gameResult = playGame();
+    
+function playGame() {
+    let n = 0;
+    while (n < 5) {
+        // prints out human's choice in the console
+        let humanChoice = getHumanChoice();
 
-// prints out computer's choice in the console
-let computerChoice = getComputerChoice();
-console.log("Computer's choice: " + computerChoice);
+        // prints out computer's choice in the console
+        let computerChoice = getComputerChoice();
 
-// plays out a single round
-console.log(playRound(humanChoice, computerChoice));
-console.log("Current score" + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore)
+        // plays out a single round
+        let roundResult = playRound(humanChoice, computerChoice);
+        console.log("Human's choice: " + humanChoice + '\n' + "Computer's choice: " + computerChoice + '\n' + roundResult);
+        console.log("Score for round " + (n + 1) + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore)
+        
+        // increment n with each round, until it hits 4 (round 5)
+        n += 1;
+    }
+    // display when human wins
+    if (humanScore > computerScore) {
+        console.log("Final score" + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore + '\n' + "Human wins!")
+    }
+    // display when computer wins
+    else if (computerScore > humanScore) {
+        console.log("Final score" + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore + '\n' + "Computer wins!")
+    }
+    // display when both parties have the same score
+    else {
+        console.log("Final score" + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore + '\n' + "It's a draw!")
+    }
+}
 
-
-
-// function that obtain human choice
+// function to obtain human choice
 function getHumanChoice() {
     // set up while loop
     let madeChoice = false;
@@ -45,7 +64,6 @@ function getHumanChoice() {
 function getComputerChoice() {
     // determine random value, multiply math.random by 3 to get a number between 0 (inclusive) and 3 (exclusive)
     value = Math.random() * 3;
-    console.log("Random value: " + value);
     // clear value of choice
     let computerChoice = "";
     // if the value is between 0 and 1, computer chooses rock
@@ -69,7 +87,7 @@ function playRound(humanChoice, computerChoice) {
     let resultText = "";
     // case where the round ends in a draw (both players choose the same)
     if (humanChoice === computerChoice) {
-        resultText = "Draw! Both players chose " + humanChoice + " .";
+        resultText = "Draw! Both players chose " + humanChoice + ".";
         return resultText;
     }
     // cases where the round ends in the human winning
@@ -77,6 +95,7 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === "rock" && computerChoice === "scissors" ||
         humanChoice === "paper" && computerChoice === "rock" ||
         humanChoice === "scissors" && computerChoice === "paper") {
+            // displays on console that human wins, adds their score by 1
             resultText = humanChoice + " beats " + computerChoice + ", Human wins!";
             humanScore += 1;
             return resultText;
@@ -86,6 +105,7 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === "rock" && computerChoice === "paper" ||
         humanChoice === "paper" && computerChoice === "scissors" ||
         humanChoice === "scissors" && computerChoice === "rock") {
+            // displays on console that computer wins, adds their score by 1
             resultText = computerChoice + " beats " + humanChoice + ", Computer wins!";
             computerScore += 1;
             return resultText;
