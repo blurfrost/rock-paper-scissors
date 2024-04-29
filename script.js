@@ -12,6 +12,7 @@ console.log("Computer's choice: " + computerChoice);
 
 // plays out a single round
 console.log(playRound(humanChoice, computerChoice));
+console.log("Current score" + '\n' + "Human: " + humanScore + '\n' + "Computer: " + computerScore)
 
 
 
@@ -64,52 +65,31 @@ function getComputerChoice() {
     }
 }
 
-function playRound (humanChoice, computerChoice) {
+function playRound(humanChoice, computerChoice) {
     let resultText = "";
+    // case where the round ends in a draw (both players choose the same)
     if (humanChoice === computerChoice) {
         resultText = "Draw! Both players chose " + humanChoice + " .";
         return resultText;
     }
-    // if human chose rock
-    else if (humanChoice === "rock") {
-        switch (computerChoice) {
-            case "paper":
-                resultText = "Paper beats Rock, Computer wins!";
-                return resultText;
-            case "scissors":
-                resultText = "Rock beats Scissors, Human wins!";
-                return resultText;
-            default:
-                resultText = "Error";
-                return resultText;
+    // cases where the round ends in the human winning
+    else if (
+        humanChoice === "rock" && computerChoice === "scissors" ||
+        humanChoice === "paper" && computerChoice === "rock" ||
+        humanChoice === "scissors" && computerChoice === "paper") {
+            resultText = humanChoice + " beats " + computerChoice + ", Human wins!";
+            humanScore += 1;
+            return resultText;
         }
-    }
-    else if (humanChoice === "paper") {
-        switch (computerChoice) {
-            case "rock":
-                resultText = "Paper beats Rock, Human wins!";
-                return resultText;
-            case "scissors":
-                resultText = "Scissors beats Paper, Computer wins!";
-                return resultText;
-            default:
-                resultText = "Error";
-                return resultText;
+    // cases where the round ends in the computer winning
+    else if (
+        humanChoice === "rock" && computerChoice === "paper" ||
+        humanChoice === "paper" && computerChoice === "scissors" ||
+        humanChoice === "scissors" && computerChoice === "rock") {
+            resultText = computerChoice + " beats " + humanChoice + ", Computer wins!";
+            computerScore += 1;
+            return resultText;
         }
-    }
-    else if (humanChoice === "scissors") {
-        switch (computerChoice) {
-            case "rock":
-                resultText = "Rock beats Scissors, Computer wins!";
-                return resultText;
-            case "paper":
-                resultText = "Scissors beats Paper, Human wins!";
-                return resultText;
-            default:
-                resultText = "Error";
-                return resultText;
-        }
-    }
     else {
         return resultText = "Error";
     }
